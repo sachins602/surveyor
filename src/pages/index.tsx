@@ -2,6 +2,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { api } from "@/utils/api";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -34,16 +35,7 @@ function AuthShowcase() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
-      </p>
-      <button
-        className="rounded-full bg-red-500 px-10 py-3 font-semibold text-white no-underline transition hover:bg-blue-700"
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
-      >
-        {sessionData ? "Sign out" : "Sign in"}
-      </button>
+      {sessionData ? <div><Button variant='destructive' onClick={() => void signOut()}>Sign out</Button></div> : <Button onClick={() => void signIn()}>Sign in</Button>}
     </div>
   );
 }
