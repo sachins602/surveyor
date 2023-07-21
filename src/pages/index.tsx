@@ -3,6 +3,10 @@ import Head from "next/head";
 import Link from "next/link";
 import { api } from "@/utils/api";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Label } from "@radix-ui/react-label";
+import { SurveyForms } from "@/components/SurveryForms";
 
 export default function Home() {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -35,7 +39,25 @@ function AuthShowcase() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      {sessionData ? <div><Button variant='destructive' onClick={() => void signOut()}>Sign out</Button></div> : <Button onClick={() => void signIn()}>Sign in</Button>}
+      {sessionData ? <div>
+        <Tabs defaultValue="account" className="w-[400px]">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="forms">Forms</TabsTrigger>
+            <TabsTrigger value="filledforms">Filled Forms</TabsTrigger>
+            <TabsTrigger value="profile">Profile</TabsTrigger>
+          </TabsList>
+          <TabsContent value="forms">
+            <SurveyForms />
+          </TabsContent>
+          <TabsContent value="filledforms">
+            hi
+          </TabsContent>
+          <TabsContent value="profile">
+            <h1 className="text-2xl font-bold">{sessionData.user.email}</h1>
+            <Button variant='destructive' onClick={() => void signOut()}>Sign out</Button>
+          </TabsContent>
+        </Tabs>
+      </div> : <Button onClick={() => void signIn()}>Sign in</Button>}
     </div>
   );
 }
