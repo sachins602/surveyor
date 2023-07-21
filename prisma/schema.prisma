@@ -20,32 +20,6 @@ model Example {
     updatedAt DateTime @updatedAt
 }
 
-// Necessary for Next auth
-model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? // @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@unique([provider, providerAccountId])
-}
-
-model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
 
 model User {
     id            String    @id @default(cuid())
@@ -55,8 +29,6 @@ model User {
     password      String?   
     emailVerified DateTime?
     phone         String?
-    accounts      Account[]
-    sessions      Session[]
 }
 
 model VerificationToken {
@@ -65,4 +37,100 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model SurveryForm {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    name      String
+    questions Question[]
+    responses Response[]
+}
+
+model Question {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    text      String
+    type      String
+    options   Option[]
+    form      SurveryForm @relation(fields: [formId], references: [id])
+    formId    String
+}
+
+model Option {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    type      String
+    text      String?
+    date     DateTime?
+    email    String?
+    phone    String?
+    image    String?
+    multipleChoiceOption MultipleChoiceOption?
+    question  Question @relation(fields: [questionId], references: [id])
+    questionId String
+    answers   Answer[]
+}
+
+model MultipleChoiceOption {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    optionone      String
+    optiontwo      String?
+    optionthree      String?
+    optionfour      String?
+    optionfive      String?
+    optionsix      String?
+    optionseven      String?
+    optioneight      String?
+    optionnine      String?
+    optionten      String?
+    option    Option @relation(fields: [optionId], references: [id])
+    optionId  String @unique
+}
+
+model Response {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    form      SurveryForm @relation(fields: [formId], references: [id])
+    formId    String
+    answers   Answer[]
+}
+
+model Answer {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    text      String?
+    date     DateTime?
+    email    String?
+    phone    String?
+    multipleChoiceAnswer MultipleChoiceAnswer?
+    option    Option @relation(fields: [optionId], references: [id])
+    optionId  String 
+    response  Response @relation(fields: [responseId], references: [id])
+    responseId String
+}
+
+model MultipleChoiceAnswer {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    optionone      Boolean
+    optiontwo      Boolean?
+    optionthree      Boolean?
+    optionfour      Boolean?
+    optionfive      Boolean?
+    optionsix      Boolean?
+    optionseven      Boolean?
+    optioneight      Boolean?
+    optionnine      Boolean?
+    optionten      Boolean?
+    answer    Answer @relation(fields: [answerId], references: [id])
+    answerId  String @unique
 }
