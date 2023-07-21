@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
-import { SurveyForms } from "@/components/SurveryForms";
+import { SurveyForm } from "@/components/SurveryForm";
 import { ThemeProvider } from "@/components/ThemeProvider/theme-provider";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
@@ -52,7 +52,7 @@ function AuthShowcase() {
             <TabsTrigger value="profile">Profile</TabsTrigger>
           </TabsList>
           <TabsContent value="forms">
-            <SurveyForms />
+            <SurveyForm />
           </TabsContent>
           <TabsContent value="filledforms">
             hi

@@ -21,13 +21,14 @@ import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { wrapAsyncFunction } from "@/utils/promise-helper";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Full Name must be at least 2 characters.",
   }),
-  date: z.date().min(new Date(), {
-    message: "Date must be in the future.",
+  date: z.date({
+    required_error: "Please select a date.",
   }),
   email: z.string().email({
     message: "Must be a vaild email",
@@ -35,12 +36,15 @@ const formSchema = z.object({
   phone: z.string().min(10, {
     message: "Phone number must be at least 10 characters.",
   }),
+  notify: z.enum(["all", "mentions", "none"], {
+    required_error: "You need to select a notification type.",
+  }),
   message: z.string().min(3, {
     message: "Description must be at least 10 characters.",
   }),
 });
 
-export function SurveyForms() {
+export function SurveyForm() {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
   // 1. Define your form.
@@ -51,6 +55,7 @@ export function SurveyForms() {
       date: new Date(),
       email: "",
       phone: "",
+      notify: "all",
       message: "",
     },
   });
@@ -60,6 +65,7 @@ export function SurveyForms() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+    form.reset();
   }
   return (
     <Form {...form}>
@@ -113,10 +119,6 @@ export function SurveyForms() {
                     selected={field.value}
                     onSelect={() => setOpen(false)}
                     onDayClick={field.onChange}
-                    disabled={(date) =>
-                      date <
-                      new Date(new Date().setDate(new Date().getDate() - 1))
-                    }
                     initialFocus
                   />
                 </PopoverContent>
@@ -152,6 +154,46 @@ export function SurveyForms() {
               </FormControl>
 
               <FormDescription>Please enter your phone number.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="notify"
+          render={({ field }) => (
+            <FormItem className="space-y-3">
+              <FormLabel>Notify me about...</FormLabel>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="flex flex-col space-y-1"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="all" />
+                    </FormControl>
+                    <FormLabel className="font-normal">
+                      All new messages
+                    </FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="mentions" />
+                    </FormControl>
+                    <FormLabel className="font-normal">
+                      Direct messages and mentions
+                    </FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="none" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Nothing</FormLabel>
+                  </FormItem>
+                </RadioGroup>
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
