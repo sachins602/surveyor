@@ -1,11 +1,8 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
-import Link from "next/link";
 import { api } from "@/utils/api";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Label } from "@radix-ui/react-label";
 import { SurveyForm } from "@/components/SurveryForm";
 import { ThemeProvider } from "@/components/ThemeProvider/theme-provider";
 import { ThemeToggle } from "@/components/ThemeToggle";
