@@ -25,7 +25,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
-import { NepalProvineAndDistrict } from "public/nepaladministrativezone";
+import { type NepalProvince, NepalProvinceAndDistrict, NepalDistrict } from "public/nepaladministrativezone";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -47,7 +47,7 @@ const formSchema = z.object({
     message: "Description must be at least 10 characters.",
   }),
   province: z.object({
-    name: z.enum(["प्रदेश नं. १", "प्रदेश नं. २", "बागमती (प्रदेश नं. ३)", "गण्डकी (प्रदेश नं. ४)", "म्बिनी (प्रदेश नं. ५)", "कर्णाली (प्रदेश नं. ६)", "सूदुरपश्चिम (प्रदेश नं. ७)"]),
+    name: z.enum(["प्रदेश नं. १", "प्रदेश नं. २", "बागमती (प्रदेश नं. ३)", "गण्डकी (प्रदेश नं. ४)", "लुम्बिनी (प्रदेश नं. ५", "कर्णाली (प्रदेश नं. ६)", "सूदुरपश्चिम (प्रदेश नं. ७)"]),
     district: z.string(),
     localAdministation: z.string(),
   }),
@@ -71,12 +71,12 @@ export function SurveyForm() {
     },
   });
 
-  const provinceWatcher = form.watch("province.name");
-  const districtWatcher = form.watch("province.district");
-  console.log(NepalProvineAndDistrict[provinceWatcher]);
-  if (districtWatcher) {
-    console.log(NepalProvineAndDistrict[provinceWatcher][districtWatcher]);
-  }
+  const nepalProvinceAndDistrict = NepalProvinceAndDistrict;
+
+  const provinceWatcher: NepalProvince = form.watch("province.name");
+  const districtWatcher: keyof NepalProvinceAndDistrict[NepalProvince] = form.watch("province.district") as keyof NepalProvinceAndDistrict[NepalProvince];
+
+
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -163,7 +163,7 @@ export function SurveyForm() {
                           <SelectItem value="प्रदेश नं. २">प्रदेश नं. २</SelectItem>
                           <SelectItem value="बागमती (प्रदेश नं. ३)">बागमती (प्रदेश नं. ३)</SelectItem>
                           <SelectItem value="गण्डकी (प्रदेश नं. ४)">गण्डकी (प्रदेश नं. ४)</SelectItem>
-                          <SelectItem value="म्बिनी (प्रदेश नं. ५)">लुम्बिनी (प्रदेश नं. ५)</SelectItem>
+                          <SelectItem value="लुम्बिनी (प्रदेश नं. ५">लुम्बिनी (प्रदेश नं. ५)</SelectItem>
                           <SelectItem value="कर्णाली (प्रदेश नं. ६)">कर्णाली (प्रदेश नं. ६)</SelectItem>
                           <SelectItem value="सूदुरपश्चिम (प्रदेश नं. ७)">सूदुरपश्चिम (प्रदेश नं. ७)</SelectItem>
                         </SelectContent>
@@ -188,7 +188,7 @@ export function SurveyForm() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {Object.keys(NepalProvineAndDistrict[provinceWatcher]).map((item) => {
+                          {Object.keys(nepalProvinceAndDistrict[provinceWatcher]).map((item) => {
                             return <SelectItem key={item} value={item}>{item}</SelectItem>
                           })
                           }
@@ -201,7 +201,7 @@ export function SurveyForm() {
                     </FormItem>
                   )}
                 /> : null}
-                {districtWatcher ? <FormField
+                {provinceWatcher && districtWatcher && nepalProvinceAndDistrict[provinceWatcher][districtWatcher] && <FormField
                   control={form.control}
                   name="province.localAdministation"
                   render={({ field }) => (
@@ -214,7 +214,7 @@ export function SurveyForm() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {NepalProvineAndDistrict[provinceWatcher][districtWatcher].map((item) => {
+                          {nepalProvinceAndDistrict[provinceWatcher][districtWatcher].map((item: string) => {
                             return <SelectItem key={item} value={item}>{item}</SelectItem>
                           })
                           }
@@ -226,7 +226,7 @@ export function SurveyForm() {
                       <FormMessage />
                     </FormItem>
                   )}
-                /> : null}
+                />}
                 <FormField
                   control={form.control}
                   name="name"
