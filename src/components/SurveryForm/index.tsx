@@ -23,7 +23,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
-import { type NepalProvince, NepalProvinceAndDistrict } from "public/nepaladministrativezone";
+import { NepalProvinceAndDistrict } from "public/nepaladministrativezone";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -1223,6 +1223,484 @@ export function SurveyForm() {
                 }}>
                   Add
                 </Button>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-4">
+              <AccordionTrigger>४. बिमा सम्बन्धी जानकारी</AccordionTrigger>
+              <AccordionContent>
+                <FormField
+                  control={form.control}
+                  name="notify"
+                  render={({ field }) => (
+                    <FormItem className="space-y-3">
+                      <FormLabel>४.१. तपार्इकाे परिवारकाे कुनै सदस्यकाे बिमा गरेकाे छ कि छैन ?</FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                          className="flex flex-col space-y-1"
+                        >
+                          <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <RadioGroupItem value="जीवन बिमा गरेकाे छ ।" />
+                            </FormControl>
+                            <FormLabel className="font-normal">
+                              जीवन बिमा गरेकाे छ ।
+                            </FormLabel>
+                          </FormItem>
+                          <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <RadioGroupItem value="स्वास्थ्य बिमा गरेकाे छ ।" />
+                            </FormControl>
+                            <FormLabel className="font-normal">
+                              स्वास्थ्य बिमा गरेकाे छ ।
+                            </FormLabel>
+                          </FormItem>
+                          <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <RadioGroupItem value="अन्य बिमा गरेकाे छ ।" />
+                            </FormControl>
+                            <FormLabel className="font-normal">अन्य बिमा गरेकाे छ ।</FormLabel>
+                          </FormItem>
+                          <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <RadioGroupItem value="कुनै पनि गरेकाे छैन ।" />
+                            </FormControl>
+                            <FormLabel className="font-normal">कुनै पनि गरेकाे छैन ।</FormLabel>
+                          </FormItem>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-5">
+              <AccordionTrigger>५.</AccordionTrigger>
+              <AccordionContent>
+                <FormField
+                  control={form.control}
+                  name="notify"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>५. तपाईको घरमा कस्तो नून प्रयोग गर्नु हुन्छ ?</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="उत्तर छान्नुहोस" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {/* Todo */}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        You can choose province
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="notify"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>५.१.१. तपाईको घरबाट हिडेर नजिकको बजार पुग्न कति समय लाग्छ ?</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="उत्तर छान्नुहोस" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {/* Todo */}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        You can choose province
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="notify"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>५.१.२. घरमा विरामी परेमा सबैभन्दा पहिले कहाँ जानु हुन्छ ?</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="उत्तर छान्नुहोस" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {/* Todo */}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        You can choose province
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="notify"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>५.१.३. तपाईको घरबाट अस्पताल पुग्न कति समय लाग्छ ?</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="उत्तर छान्नुहोस" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {/* Todo */}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        You can choose province
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="notify"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>५.१.४. तपाईको घरमा १६ बर्ष मुनिको (बालबालिका) कोही काम गर्न बसेको छ ?</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="उत्तर छान्नुहोस" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {/* Todo */}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        You can choose province
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-6">
+              <AccordionTrigger>६. सेवा सुविधाहरूकाे विवरण</AccordionTrigger>
+              <AccordionContent>
+                <FormField
+                  control={form.control}
+                  name="notify"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>६.१. तपार्इकाे घरकाे खानेपानीकाे मुख्य श्राेत के हाे ?</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="उत्तर छान्नुहोस" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {/* Todo */}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        You can choose province
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="notify"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>६.२. तपार्इकाे घरमा खाना पकाउन प्रयाेग गर्ने मुख्य इन्धन केहाे ?</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="उत्तर छान्नुहोस" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {/* Todo */}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        You can choose province
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="notify"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>६.३. तपार्इकाे घरमा प्रयाेग हुने बत्तिकाे श्राेत के हाे ?</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="उत्तर छान्नुहोस" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {/* Todo */}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        You can choose province
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="notify"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>६.४ तपार्इकाे परिवारले प्रयाेग गर्ने शाैचालय कस्ताे छ ?</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="उत्तर छान्नुहोस" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {/* Todo */}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        You can choose province
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </AccordionContent>
+            </AccordionItem>
+            <FormField
+              control={form.control}
+              name="notify"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>७. तपार्इकाे घरमा के के सामग्री छन्</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col space-y-1"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="रेडियाे" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          रेडियाे
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="टेलिभिजन" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          टेलिभिजन
+                        </FormLabel>
+                      </FormItem>
+                      {/* Todo */}
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <AccordionItem value="item-7">
+              <AccordionTrigger>८.</AccordionTrigger>
+              <AccordionContent>
+                <FormField
+                  control={form.control}
+                  name="notify"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>८. तपार्इकाे परिवारले कृषि कार्यकाे लागि जग्गा उपभाेग गरेकाे छ कि छैन ?</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="उत्तर छान्नुहोस" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {/* Todo */}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        You can choose province
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* nest these */}
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>८.१.१. जग्गा उपभोग गर्नुभएको भए आफ्नो परिवारको नाममा (नम्बरी जग्गा) कति जग्गा छ ?</FormLabel>
+                      <FormControl>
+                        <Input placeholder="1" {...field} />
+                      </FormControl>
+
+                      <FormDescription>Please enter your full name.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>८.१.२.१ ऐलानी जग्गा पनि कमाउनु भएको भए कती छ ? (राेपनी या कठ्ठामा भन्नुहाेस) ।</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Jhon Doe" {...field} />
+                      </FormControl>
+
+                      <FormDescription>Please enter your full name.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>८.१.२. आंकडा जग्गा पनि कमाउनु भएको भए कति छ ? (रोपनी वा कठ्ठामा भन्नुहोस) ।</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Jhon Doe" {...field} />
+                      </FormControl>
+
+                      <FormDescription>Please enter your full name.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>८.१.२. अाफ्नाे बाहेक अरूकाे जग्गा पनि कमाउनु भएकाे भए कति छ ? (राेपनी वा कठ्ठामा भन्नुहाेस ) ।</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Jhon Doe" {...field} />
+                      </FormControl>
+
+                      <FormDescription>Please enter your full name.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>८.१.३. अन्य स्वामित्वकाे जग्गा पनि कमाउनु भएकाे भए कति छ ? (राेपनी वा कठ्ठामा भन्नुहाेस) ।</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Jhon Doe" {...field} />
+                      </FormControl>
+
+                      <FormDescription>Please enter your full name.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>८.१.४. तपाईको परिवारले उपभोग गर्ने जमिन मध्ये खेत कति छ ?(राेपनीमा भन्नुहाेस)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Jhon Doe" {...field} />
+                      </FormControl>
+
+                      <FormDescription>Please enter your full name.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>८.१.५. तपाईको परिवारले उपभोग गर्ने जमिन मध्ये बारी कति छ ? (राेपनीमा भन्नुहाेस)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Jhon Doe" {...field} />
+                      </FormControl>
+
+                      <FormDescription>Please enter your full name.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="notify"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>८.१.६. तपाईको खेतमा सिंचाई सुविधा छ कि छैन ?</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="उत्तर छान्नुहोस" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {/* Todo */}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        You can choose province
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>८.१.८. खेती नगरि बाझो रहेको जमिन कति छ ?(राेपनीमा वा कठ्ठा वा हेक्टर वा व.मि.भन्नुहाेस)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Jhon Doe" {...field} />
+                      </FormControl>
+
+                      <FormDescription>Please enter your full name.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
               </AccordionContent>
             </AccordionItem>
           </Accordion>
