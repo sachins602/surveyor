@@ -22,8 +22,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { type NepalDistrict, NepalProvinceAndDistrict } from "public/nepaladministrativezone";
 
-import { NepalProvinceAndDistrict } from "public/nepaladministrativezone";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -225,7 +225,7 @@ export function SurveyForm() {
     },
   });
 
-  const { fields, append, remove } = useFieldArray<z.infer<typeof formSchema>>({
+  const { fields: familyFields, append: familyAppend, remove: familyRemove } = useFieldArray<z.infer<typeof formSchema>>({
     control: form.control,
     name: "familyDetails" as never,
   });
@@ -257,7 +257,7 @@ export function SurveyForm() {
           onSubmit={wrapAsyncFunction(form.handleSubmit(onSubmit))}
           className="space-y-4 p-2"
         >
-          <Accordion className="w-full" type="single" collapsible>
+          <Accordion className="w-full" type="multiple" >
             <AccordionItem value="item-1">
               <AccordionTrigger>१. तथ्यांक व्यवस्थापन?</AccordionTrigger>
               <AccordionContent>
@@ -366,7 +366,7 @@ export function SurveyForm() {
                     </FormItem>
                   )}
                 />}
-                {addressWatcher.district && NepalProvinceAndDistrict[addressWatcher.name][addressWatcher.district] && <FormField
+                {addressWatcher.district && NepalProvinceAndDistrict[addressWatcher.name][addressWatcher.district as NepalDistrict] && <FormField
                   control={form.control}
                   name="province.localAdministation"
                   render={({ field }) => (
@@ -383,7 +383,7 @@ export function SurveyForm() {
                             return <SelectItem key={item} value={item}>{item}</SelectItem>
                           })
                           } */}
-                          {Object.values(NepalProvinceAndDistrict[addressWatcher.name][addressWatcher.district] as string[]).map((item) => {
+                          {Object.values(NepalProvinceAndDistrict[addressWatcher.name][addressWatcher.district as NepalDistrict] as string[]).map((item) => {
                             return <SelectItem key={item} value={item}>{item}</SelectItem>
                           })
                           }
@@ -690,11 +690,11 @@ export function SurveyForm() {
               <AccordionTrigger>३. पारिवारिक बिवरण</AccordionTrigger>
               <AccordionContent>
 
-                {fields.map((item, index) => {
+                {familyFields.map((item, index) => {
                   return (
                     <div key={item.id} className="space-y-4">
                       <p>परिवारका सदस्यहरुको विवरण (घरमुलीबाट शुरु गर्ने र जेष्ठ सदस्य अनुसार क्रम मिलाएर उल्लेख गर्ने)</p>
-                      <Button onClick={() => remove(index)}>Remove</Button>
+                      <Button onClick={() => familyRemove(index)}>Remove</Button>
                       <FormField
                         control={form.control}
                         name={`familyDetails.${index}.firstName` as never}
@@ -1219,7 +1219,7 @@ export function SurveyForm() {
                 })}
                 <Button onClick={(e) => {
                   e.preventDefault();
-                  append({});
+                  familyAppend({});
                 }}>
                   Add
                 </Button>

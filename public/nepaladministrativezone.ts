@@ -933,9 +933,8 @@ export const NepalProvinceAndDistrict = {
 };
 
 
-export type NepalProvinceAndDistrict = typeof NepalProvinceAndDistrict;
-export type NepalProvince = keyof NepalProvinceAndDistrict;
+type NepalProvinceAndDistrict = typeof NepalProvinceAndDistrict;
+type NepalProvince = keyof NepalProvinceAndDistrict;
 export type NepalDistrict = keyof NepalProvinceAndDistrict[NepalProvince];
-export type NepalMunicipality = NepalProvinceAndDistrict[NepalProvince][NepalDistrict];
 
 
