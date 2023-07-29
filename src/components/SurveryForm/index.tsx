@@ -127,6 +127,83 @@ const formSchema = z.object({
       "साधारण लेखपढ",
       "निरक्षर",
       "उमेर कम",]),
+    job: z.enum(["कृषि तथा पशुपालन",
+      "नोकरी जागिर",
+      "उद्योग व्यापार",
+      "ज्याला मजदुरी",
+      "व्यवसायिक कार्य (पत्रकार, वकिल, परामर्श, ठेक्का, पुजारी)",
+      "बैदेशिक रोजगारी",
+      "विद्यार्थी (अध्ययनरत)",
+      "गृहिणी",
+      "बेरोजगार",
+      "कम उमेर",
+      "अन्य",
+      "पेन्सन",
+      "प्राविधिक",
+      "बढी उमेर",
+      "प्लम्बर",
+      "डकर्मी",
+      "सीकर्मी",
+    ]),
+    specialSkill: z.enum(["इन्जिनीयर",
+      "चिकित्सक",
+      "कानूनविद",
+      "कृषि विशेषज्ञ",
+      "पशु चिकित्सक",
+      "लेखाविद",
+      "सन्चारकमी",
+      "विशेष सीप नभएका",
+      "वन विशेषज्ञ",
+      "खाद्यय प्रशोधन विशेषज्ञ",
+      "अन्य",
+    ]),
+    maritalStatus: z.enum(["अविवाहित",
+      "एकल बिवाह",
+      "बहु बिवाह",
+      "पुनः बिवाह",
+      "एकल पुरष, एकल महिला",
+      "सम्बन्ध बिच्छेद",
+      "बिबाहित तर अलग बसेको",
+      "उमेर कम",
+    ]),
+    businessStatus: z.enum(["गणना गरेकै ठाउँमा बसेको",
+      "स्वदेशमा अन्यत्र बसेको",
+      "बिदेशमा बसेको",
+    ]),
+    disabilityStatus: z.enum(["सपांग",
+      "शारीरिक अपाङ्गता",
+      "बौद्धिक अपाङ्गता",
+      "दृष्टिसम्बन्धी अपाङ्गता",
+      "श्रवण दृष्टिविहीन अपाङ्गता (बहिरा)",
+      "स्वर र बोलाइसम्बन्धी अपाङ्गता",
+      "सुनुवाइसम्बन्धी अपाङ्गता",
+      "मानसिक वा मनोसामाजिक अपाङ्गता",
+      "अटिज्मसम्बन्धी अपाङ्गता (सुस्त मनस्थिती­)",
+      "बहुअपाङ्गता",
+      "अनुवंशीय रक्तश्राव (हेमोफोलिया) सम्बन्धी अपाङ्गता",
+    ]),
+    healthStatus: z.enum(['']),
+    businessTranining: z.enum(["सिलार्इ,बुनार्इ, बुटिक, सृङगार, पार्लर अादि",
+      "सूचना तथा प्रबिधि, र्इलेक्ट्रकल, र्इलेक्ट्रनिक्स(कम्प्युटर, विद्युत, माेबाइल, रेडियाे, घडि मर्मत अादि)",
+      "निर्माण सम्बन्धी (राज मिस्त्रि, कार्पेन्ट्री अादी)",
+      "र्इन्जिनियरिङ,अटाेमाेबाइल र मेकानिक्स",
+      "कृषि सम्बन्धी (जेटी, जेटिए र खाद्य प्रशाेधन अादि)",
+      "जनस्वास्थ्य सम्बन्धी",
+      "पशुस्वास्थ्य सम्बन्धी",
+      "पर्यटन, टुर गाइड, ट्राभल र सत्कारकला सम्बन्धी",
+      "अन्य",
+      "तालिम लिएकाे छैन",
+    ]),
+    trainingTime: z.enum(['']),
+    socialSecurity: z.enum(["लिन नमिल्ने",
+      "बृद्घा भत्ता",
+      "विधवा भत्ता",
+      "एकल भत्ता",
+      "अपांग भत्ता",
+      "पोषण भत्ता",
+      "लोपोन्मुख समुह भत्ता",
+      "भत्ता नलिएका",
+    ])
   }),
 });
 
@@ -759,6 +836,375 @@ export function SurveyForm() {
                                 <SelectItem value="पहाडी अन्य">पहाडी अन्य</SelectItem>
                                 <SelectItem value="तरार्इ अन्य">तरार्इ अन्य</SelectItem>
                                 <SelectItem value="लोपन्मुख">लोपन्मुख</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              You can choose province
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="familyDetails.language"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>बाेल्ने भाषा</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="उत्तर छान्नुहोस" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="मैथिली">मैथिली</SelectItem>
+                                <SelectItem value="भाेजपुरी">भाेजपुरी</SelectItem>
+                                <SelectItem value="थारू">थारू</SelectItem>
+                                <SelectItem value="हिन्दी">हिन्दी</SelectItem>
+                                <SelectItem value="उर्दु">उर्दु</SelectItem>
+                                <SelectItem value="बान्तवा">बान्तवा</SelectItem>
+                                <SelectItem value="चाम्लिङ">चाम्लिङ</SelectItem>
+                                <SelectItem value="लिम्बु">लिम्बु</SelectItem>
+                                <SelectItem value="तामाङ">तामाङ</SelectItem>
+                                <SelectItem value="डाेटेली">डाेटेली</SelectItem>
+                                <SelectItem value="खस">खस</SelectItem>
+                                <SelectItem value="झागड (उराउ)">झागड (उराउ)</SelectItem>
+                                <SelectItem value="अन्य">अन्य</SelectItem>
+                                <SelectItem value="मगर">मगर</SelectItem>
+                                <SelectItem value="अवधी">अवधी</SelectItem>
+                                <SelectItem value="गुरुङ">गुरुङ</SelectItem>
+                                <SelectItem value="नेवारी">नेवारी</SelectItem>
+                                <SelectItem value="कछडिया">कछडिया</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              You can choose province
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="familyDetails.religion"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>धर्म</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="उत्तर छान्नुहोस" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="हिन्दु">हिन्दु</SelectItem>
+                                <SelectItem value="बौद्ध">बौद्ध</SelectItem>
+                                <SelectItem value="इस्लाम">इस्लाम</SelectItem>
+                                <SelectItem value="ईसाई">ईसाई</SelectItem>
+                                <SelectItem value="अन्य">अन्य</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              You can choose province
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="familyDetails.education"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>शैक्षिक याेग्यता</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="उत्तर छान्नुहोस" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="पूर्व प्रथमिक">पूर्व प्रथमिक</SelectItem>
+                                <SelectItem value="अाधारभूत तह">अाधारभूत तह</SelectItem>
+                                <SelectItem value="माध्यिमक">माध्यिमक</SelectItem>
+                                <SelectItem value="तहस्नातक तह">तहस्नातक तह</SelectItem>
+                                <SelectItem value="स्नातकोत्तर तह">स्नातकोत्तर तह</SelectItem>
+                                <SelectItem value="प्राविधिक">प्राविधिक</SelectItem>
+                                <SelectItem value="एसलसि">एसलसि</SelectItem>
+                                <SelectItem value="साधारण लेखपढ">साधारण लेखपढ</SelectItem>
+                                <SelectItem value="निरक्षर">निरक्षर</SelectItem>
+                                <SelectItem value="उमेर कम">उमेर कम</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              You can choose province
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="familyDetails.job"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>पेशा</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="उत्तर छान्नुहोस" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="कृषि तथा पशुपालन">कृषि तथा पशुपालन</SelectItem>
+                                <SelectItem value="नोकरी जागिर">नोकरी जागिर</SelectItem>
+                                <SelectItem value="उद्योग व्यापार">उद्योग व्यापार</SelectItem>
+                                <SelectItem value="ज्याला मजदुरी">ज्याला मजदुरी</SelectItem>
+                                <SelectItem value="व्यवसायिक कार्य (पत्रकार, वकिल, परामर्श, ठेक्का, पुजारी)">व्यवसायिक कार्य (पत्रकार, वकिल, परामर्श, ठेक्का, पुजारी)</SelectItem>
+                                <SelectItem value="बैदेशिक रोजगारी">बैदेशिक रोजगारी</SelectItem>
+                                <SelectItem value="विद्यार्थी (अध्ययनरत)">विद्यार्थी (अध्ययनरत)</SelectItem>
+                                <SelectItem value="गृहिणी">गृहिणी</SelectItem>
+                                <SelectItem value="बेरोजगार">बेरोजगार</SelectItem>
+                                <SelectItem value="कम उमेर">कम उमेर</SelectItem>
+                                <SelectItem value="अन्य">अन्य</SelectItem>
+                                <SelectItem value="पेन्सन">पेन्सन</SelectItem>
+                                <SelectItem value="प्राविधिक">प्राविधिक</SelectItem>
+                                <SelectItem value="बढी उमेर">बढी उमेर</SelectItem>
+                                <SelectItem value="प्लम्बर">प्लम्बर</SelectItem>
+                                <SelectItem value="डकर्मी">डकर्मी</SelectItem>
+                                <SelectItem value="सीकर्मी">सीकर्मी</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              You can choose province
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="familyDetails.specialSkill"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>तपाईको विषेश सीप के छ ?</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="उत्तर छान्नुहोस" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="इन्जिनीयर">इन्जिनीयर</SelectItem>
+                                <SelectItem value="चिकित्सक">चिकित्सक</SelectItem>
+                                <SelectItem value="कानूनविद">कानूनविद</SelectItem>
+                                <SelectItem value="कृषि विशेषज्ञ">कृषि विशेषज्ञ</SelectItem>
+                                <SelectItem value="पशु चिकित्सक">पशु चिकित्सक</SelectItem>
+                                <SelectItem value="लेखाविद">लेखाविद</SelectItem>
+                                <SelectItem value="सन्चारकमी">सन्चारकमी</SelectItem>
+                                <SelectItem value="विशेष सीप नभएका">विशेष सीप नभएका</SelectItem>
+                                <SelectItem value="वन विशेषज्ञ">वन विशेषज्ञ</SelectItem>
+                                <SelectItem value="खाद्यय प्रशोधन विशेषज्ञ">खाद्यय प्रशोधन विशेषज्ञ</SelectItem>
+                                <SelectItem value="अन्य">अन्य</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              You can choose province
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="familyDetails.maritalStatus"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>बैवाहिक स्थिति</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="उत्तर छान्नुहोस" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="अविवाहित">अविवाहित</SelectItem>
+                                <SelectItem value="एकल बिवाह">एकल बिवाह</SelectItem>
+                                <SelectItem value="बहु बिवाह">बहु बिवाह</SelectItem>
+                                <SelectItem value="पुनः बिवाह">पुनः बिवाह</SelectItem>
+                                <SelectItem value="एकल पुरष, एकल महिला">एकल पुरष, एकल महिला</SelectItem>
+                                <SelectItem value="सम्बन्ध बिच्छेद">सम्बन्ध बिच्छेद</SelectItem>
+                                <SelectItem value="बिबाहित तर अलग बसेको">बिबाहित तर अलग बसेको</SelectItem>
+                                <SelectItem value="उमेर कम">उमेर कम</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              You can choose province
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="familyDetails.businessStatus"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>बसाेबासकाे अवस्था</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="उत्तर छान्नुहोस" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="गणना गरेकै ठाउँमा बसेको">गणना गरेकै ठाउँमा बसेको</SelectItem>
+                                <SelectItem value="स्वदेशमा अन्यत्र बसेको">स्वदेशमा अन्यत्र बसेको</SelectItem>
+                                <SelectItem value="बिदेशमा बसेको">बिदेशमा बसेको</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              You can choose province
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="familyDetails.disabilityStatus"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>अपांगता स्थिति</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="उत्तर छान्नुहोस" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="सपांग">सपांग</SelectItem>
+                                <SelectItem value="शारीरिक अपाङ्गता">शारीरिक अपाङ्गता</SelectItem>
+                                <SelectItem value="बौद्धिक अपाङ्गता">बौद्धिक अपाङ्गता</SelectItem>
+                                <SelectItem value="दृष्टिसम्बन्धी अपाङ्गता">दृष्टिसम्बन्धी अपाङ्गता</SelectItem>
+                                <SelectItem value="श्रवण दृष्टिविहीन अपाङ्गता (बहिरा)">श्रवण दृष्टिविहीन अपाङ्गता (बहिरा)</SelectItem>
+                                <SelectItem value="स्वर र बोलाइसम्बन्धी अपाङ्गता">स्वर र बोलाइसम्बन्धी अपाङ्गता</SelectItem>
+                                <SelectItem value="सुनुवाइसम्बन्धी अपाङ्गता">सुनुवाइसम्बन्धी अपाङ्गता</SelectItem>
+                                <SelectItem value="मानसिक वा मनोसामाजिक अपाङ्गता">मानसिक वा मनोसामाजिक अपाङ्गता</SelectItem>
+                                <SelectItem value="अटिज्मसम्बन्धी अपाङ्गता (सुस्त मनस्थिती­)">अटिज्मसम्बन्धी अपाङ्गता (सुस्त मनस्थिती­)</SelectItem>
+                                <SelectItem value="बहुअपाङ्गता">बहुअपाङ्गता</SelectItem>
+                                <SelectItem value="अनुवंशीय रक्तश्राव (हेमोफोलिया) सम्बन्धी अपाङ्गता">अनुवंशीय रक्तश्राव (हेमोफोलिया) सम्बन्धी अपाङ्गता</SelectItem>
+
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              You can choose province
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="familyDetails.healthStatus"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>स्वास्थ्य स्थिति</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="उत्तर छान्नुहोस" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="स्वस्थ">स्वस्थ</SelectItem>
+                                {/* Todo */}
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              You can choose province
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="familyDetails.businessTranining"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>व्यवसायिक तालिमको अवस्था</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="उत्तर छान्नुहोस" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="सिलार्इ,बुनार्इ, बुटिक, सृङगार, पार्लर अादि">सिलार्इ,बुनार्इ, बुटिक, सृङगार, पार्लर अादि</SelectItem>
+                                <SelectItem value="सूचना तथा प्रबिधि, र्इलेक्ट्रकल, र्इलेक्ट्रनिक्स(कम्प्युटर, विद्युत, माेबाइल, रेडियाे, घडि मर्मत अादि)">सूचना तथा प्रबिधि, र्इलेक्ट्रकल, र्इलेक्ट्रनिक्स(कम्प्युटर, विद्युत, माेबाइल, रेडियाे, घडि मर्मत अादि)</SelectItem>
+                                <SelectItem value="निर्माण सम्बन्धी (राज मिस्त्रि, कार्पेन्ट्री अादी)">निर्माण सम्बन्धी (राज मिस्त्रि, कार्पेन्ट्री अादी)</SelectItem>
+                                <SelectItem value="र्इन्जिनियरिङ,अटाेमाेबाइल र मेकानिक्स">र्इन्जिनियरिङ,अटाेमाेबाइल र मेकानिक्स</SelectItem>
+                                <SelectItem value="कृषि सम्बन्धी (जेटी, जेटिए र खाद्य प्रशाेधन अादि)">कृषि सम्बन्धी (जेटी, जेटिए र खाद्य प्रशाेधन अादि)</SelectItem>
+                                <SelectItem value="जनस्वास्थ्य सम्बन्धी">जनस्वास्थ्य सम्बन्धी</SelectItem>
+                                <SelectItem value="पशुस्वास्थ्य सम्बन्धी">पशुस्वास्थ्य सम्बन्धी</SelectItem>
+                                <SelectItem value="पर्यटन, टुर गाइड, ट्राभल र सत्कारकला सम्बन्धी">पर्यटन, टुर गाइड, ट्राभल र सत्कारकला सम्बन्धी</SelectItem>
+                                <SelectItem value="अन्य">अन्य</SelectItem>
+                                <SelectItem value="तालिम लिएकाे छैन">तालिम लिएकाे छैन</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              You can choose province
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="familyDetails.trainingTime"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>तालिमको अबधि ?</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="उत्तर छान्नुहोस" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {/* Todo */}
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              You can choose province
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="familyDetails.socialSecurity"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>सामाजिक सुरक्षा भत्ताको अवस्था ?</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="उत्तर छान्नुहोस" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="लिन नमिल्ने">लिन नमिल्ने</SelectItem>
+                                <SelectItem value="बृद्घा भत्ता">बृद्घा भत्ता</SelectItem>
+                                <SelectItem value="विधवा भत्ता">विधवा भत्ता</SelectItem>
+                                <SelectItem value="एकल भत्ता">एकल भत्ता</SelectItem>
+                                <SelectItem value="अपांग भत्ता">अपांग भत्ता</SelectItem>
+                                <SelectItem value="पोषण भत्ता">पोषण भत्ता</SelectItem>
+                                <SelectItem value="लोपोन्मुख समुह भत्ता">लोपोन्मुख समुह भत्ता</SelectItem>
+                                <SelectItem value="भत्ता नलिएका">भत्ता नलिएका</SelectItem>
                               </SelectContent>
                             </Select>
                             <FormDescription>
