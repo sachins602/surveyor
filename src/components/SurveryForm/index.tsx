@@ -23,8 +23,9 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { type NepalDistrict, NepalProvinceAndDistrict } from "public/nepaladministrativezone";
+import { Checkbox } from "../ui/checkbox";
 
-
+const insuranceStatus = ["जीवन बिमा गरेकाे छ ।", "स्वास्थ्य बिमा गरेकाे छ ।", "अन्य बिमा गरेकाे छ ।", "कुनै पनि गरेकाे छैन ।"] as const;
 const formSchema = z.object({
   surveyManagement: z.object({
     surveyCode: z.number(),
@@ -58,6 +59,7 @@ const formSchema = z.object({
     contactNumber: z.number().min(10, {
       message: "Phone number must be at least 10 characters.",
     }),
+    residentStatus: z.enum(["स्थायी", "अस्थायी", "स्थायी (सुकुम्वासी)"]),
   }),
   familyDetails: z.object({
     firstName: z.string(),
@@ -208,6 +210,11 @@ const formSchema = z.object({
       "लोपोन्मुख समुह भत्ता",
       "भत्ता नलिएका",
     ])
+  }),
+  insuranceDetails: z.object({
+    familyInsuranceStatus: z.array(z.string()).refine((value) => value.some((item) => item), {
+      message: "You have to select at least one item.",
+    }),
   }),
   name: z.string().min(2, {
     message: "Full Name must be at least 2 characters.",
@@ -723,6 +730,46 @@ export function SurveyForm() {
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name="identity.contactNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>२.१३   काे संम्पर्क नं कति हाे ?</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Jhon Doe" {...field} />
+                      </FormControl>
+
+                      <FormDescription>Please enter.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="identity.residentStatus"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>२.१४.१. तपाईको परिवारको यहाको बसोवास कस्तो हो ?</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="उत्तर छान्नुहोस" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="स्थायी">स्थायी</SelectItem>
+                          <SelectItem value="अस्थायी">अस्थायी</SelectItem>
+                          <SelectItem value="स्थायी (सुकुम्वासी)">स्थायी (सुकुम्वासी)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        You can choose province
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
@@ -807,7 +854,7 @@ export function SurveyForm() {
                         name="familyDetails.relationToHouseOwner"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>२.१. प्रदेश नं.</FormLabel>
+                            <FormLabel>घरमुलीकाे के पर्ने ?</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
                                 <SelectTrigger>
@@ -1269,51 +1316,52 @@ export function SurveyForm() {
               <AccordionContent>
                 <FormField
                   control={form.control}
-                  name="notify"
-                  render={({ field }) => (
-                    <FormItem className="space-y-3">
-                      <FormLabel>४.१. तपार्इकाे परिवारकाे कुनै सदस्यकाे बिमा गरेकाे छ कि छैन ?</FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                          className="flex flex-col space-y-1"
-                        >
-                          <FormItem className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <RadioGroupItem value="जीवन बिमा गरेकाे छ ।" />
-                            </FormControl>
-                            <FormLabel className="font-normal">
-                              जीवन बिमा गरेकाे छ ।
-                            </FormLabel>
-                          </FormItem>
-                          <FormItem className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <RadioGroupItem value="स्वास्थ्य बिमा गरेकाे छ ।" />
-                            </FormControl>
-                            <FormLabel className="font-normal">
-                              स्वास्थ्य बिमा गरेकाे छ ।
-                            </FormLabel>
-                          </FormItem>
-                          <FormItem className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <RadioGroupItem value="अन्य बिमा गरेकाे छ ।" />
-                            </FormControl>
-                            <FormLabel className="font-normal">अन्य बिमा गरेकाे छ ।</FormLabel>
-                          </FormItem>
-                          <FormItem className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <RadioGroupItem value="कुनै पनि गरेकाे छैन ।" />
-                            </FormControl>
-                            <FormLabel className="font-normal">कुनै पनि गरेकाे छैन ।</FormLabel>
-                          </FormItem>
-                        </RadioGroup>
-                      </FormControl>
+                  name="insuranceDetails.familyInsuranceStatus"
+                  render={() => (
+                    <FormItem>
+                      <div className="mb-4">
+                        <FormLabel className="text-base">४.१. तपार्इकाे परिवारकाे कुनै सदस्यकाे बिमा गरेकाे छ कि छैन ?</FormLabel>
+                        <FormDescription>
+                          Select the items you want to display in the sidebar.
+                        </FormDescription>
+                      </div>
+                      {insuranceStatus.map((item) => (
+                        <FormField
+                          key={item}
+                          control={form.control}
+                          name="insuranceDetails.familyInsuranceStatus"
+                          render={({ field }) => {
+                            return (
+                              <FormItem
+                                key={item}
+                                className="flex flex-row items-start space-x-3 space-y-0"
+                              >
+                                <FormControl>
+                                  <Checkbox
+                                    checked={field.value?.includes(item)}
+                                    onCheckedChange={(checked) => {
+                                      return checked
+                                        ? field.onChange([...field.value || [], item])
+                                        : field.onChange(
+                                          field.value?.filter(
+                                            (value) => value !== item
+                                          )
+                                        )
+                                    }}
+                                  />
+                                </FormControl>
+                                <FormLabel className="font-normal">
+                                  {item}
+                                </FormLabel>
+                              </FormItem>
+                            )
+                          }}
+                        />
+                      ))}
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-5">
