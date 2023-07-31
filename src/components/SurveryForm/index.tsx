@@ -205,6 +205,8 @@ const formSchema = z.object({
       "भत्ता नलिएका",
     ])
   }),
+  familyBankStatus: z.enum(["छ", "छैन",]),
+  familyBankDetail: z.enum(["बैंक", "लगुवित्तीय", "सहकारी",]),
 });
 
 export function SurveyForm() {
@@ -1681,6 +1683,62 @@ export function SurveyForm() {
                       </FormControl>
 
                       <FormDescription>Please enter your full name.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-8">
+              <AccordionTrigger>१७. अार्थिक क्षेत्रकाे जानकारी</AccordionTrigger>
+              <AccordionContent>
+
+                <FormField
+                  control={form.control}
+                  name="familyBankStatus"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>१७.१. परिवारकाे कुनै सदस्यकाे बैंक तथा वित्तीय संस्थामा खाता छ ?</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="उत्तर छान्नुहोस" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="छ">छ</SelectItem>
+                          <SelectItem value="छैन">छैन</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        You can choose province
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="familyBankStatus"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>१७.१.१.१. तपाईको परिवारका सदस्यकाे बैंक तथा वित्तीय संस्थामा खाता छ भने कहाँ छ ?</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="उत्तर छान्नुहोस" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="बैंक">बैंक</SelectItem>
+                          <SelectItem value="लगुवित्तीय">लगुवित्तीय</SelectItem>
+                          <SelectItem value="सहकारी">सहकारी</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        You can choose province
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
