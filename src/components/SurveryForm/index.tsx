@@ -45,7 +45,7 @@ const formSchema = z.object({
     message: "Description must be at least 10 characters.",
   }),
   province: z.object({
-    name: z.enum(["प्रदेश नं. १", "प्रदेश नं. २", "बागमती (प्रदेश नं. ३)", "गण्डकी (प्रदेश नं. ४)", "लुम्बिनी (प्रदेश नं. ५", "कर्णाली (प्रदेश नं. ६)", "सूदुरपश्चिम (प्रदेश नं. ७)"]),
+    name: z.enum(["कोशी (प्रदेश नं. १)", "मदेश (प्रदेश नं. २)", "बागमती (प्रदेश नं. ३)", "गण्डकी (प्रदेश नं. ४)", "लुम्बिनी (प्रदेश नं. ५", "कर्णाली (प्रदेश नं. ६)", "सूदुरपश्चिम (प्रदेश नं. ७)"]),
     district: z.string(),
     localAdministation: z.string(),
   }),
@@ -324,8 +324,8 @@ export function SurveyForm() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="प्रदेश नं. १">प्रदेश नं. १</SelectItem>
-                          <SelectItem value="प्रदेश नं. २">प्रदेश नं. २</SelectItem>
+                          <SelectItem value="कोशी (प्रदेश नं. १)">कोशी (प्रदेश नं. १)</SelectItem>
+                          <SelectItem value="मदेश (प्रदेश नं. २)">मदेश (प्रदेश नं. २)</SelectItem>
                           <SelectItem value="बागमती (प्रदेश नं. ३)">बागमती (प्रदेश नं. ३)</SelectItem>
                           <SelectItem value="गण्डकी (प्रदेश नं. ४)">गण्डकी (प्रदेश नं. ४)</SelectItem>
                           <SelectItem value="लुम्बिनी (प्रदेश नं. ५">लुम्बिनी (प्रदेश नं. ५)</SelectItem>
@@ -432,21 +432,6 @@ export function SurveyForm() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>२.५.१ घरको क्रम सख्या</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Jhon Doe" {...field} />
-                      </FormControl>
-
-                      <FormDescription>Please enter your full name.</FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>२.६. वस्तीकाे CODE</FormLabel>
                       <FormControl>
                         <Input placeholder="Jhon Doe" {...field} />
                       </FormControl>
@@ -652,7 +637,7 @@ export function SurveyForm() {
                   name="houseOwnerRelation"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>२.१. प्रदेश नं.</FormLabel>
+                      <FormLabel>२.१२  घरमुलीकाे के नाता पर्ने हाे ?</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
