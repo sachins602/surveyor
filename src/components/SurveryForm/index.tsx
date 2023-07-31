@@ -26,34 +26,38 @@ import { type NepalDistrict, NepalProvinceAndDistrict } from "public/nepaladmini
 
 
 const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Full Name must be at least 2 characters.",
+  surveyManagement: z.object({
+    surveyCode: z.number(),
+    surveryDate: z.date(),
+    surveyorName: z.string(),
   }),
-  date: z.date({
-    required_error: "Please select a date.",
-  }),
-  email: z.string().email({
-    message: "Must be a vaild email",
-  }),
-  phone: z.string().min(10, {
-    message: "Phone number must be at least 10 characters.",
-  }),
-  notify: z.enum(["all", "mentions", "none"], {
-    required_error: "You need to select a notification type.",
-  }),
-  message: z.string().min(3, {
-    message: "Description must be at least 10 characters.",
-  }),
-  province: z.object({
-    name: z.enum(["कोशी (प्रदेश नं. १)", "मदेश (प्रदेश नं. २)", "बागमती (प्रदेश नं. ३)", "गण्डकी (प्रदेश नं. ४)", "लुम्बिनी (प्रदेश नं. ५", "कर्णाली (प्रदेश नं. ६)", "सूदुरपश्चिम (प्रदेश नं. ७)"]),
-    district: z.string(),
-    localAdministation: z.string(),
-  }),
-  type: z.enum(["male", "female", "others"], {
-    required_error: "You need to select a notification type.",
-  }),
-  houseOwnerRelation: z.enum(["घरमुली आफै", "श्रीमान/श्रीमती", "अामा/ बुवा", "छोरा वा बुहारी", "छोरी वा ज्वार्इ", "ससुरा वा सासु", "काका वा काकी", "फुफु, फुफाजु", "मामा, माइजु", "नाति, नातिनी", "दाजु, भाइ", "भाउजू वा भाइबुहारी", "दीदि, बिहनी", "ज्वार्इ, जेठान", "ठूलाे बुवा, ठूलाे अामा"], {
-    required_error: "You need to select a notification type.",
+  identity: z.object({
+    province: z.object({
+      name: z.enum(["कोशी (प्रदेश नं. १)", "मदेश (प्रदेश नं. २)", "बागमती (प्रदेश नं. ३)", "गण्डकी (प्रदेश नं. ४)", "लुम्बिनी (प्रदेश नं. ५", "कर्णाली (प्रदेश नं. ६)", "सूदुरपश्चिम (प्रदेश नं. ७)"]),
+      district: z.string(),
+      localAdministation: z.string(),
+    }),
+    ward: z.number(),
+    localityName: z.string(),
+    houseNumber: z.string(),
+    streetName: z.string(),
+    familyMembers: z.number(),
+    streetType: z.enum(["गोरेटो बाटो", "ग्राभेल बाटो", "बाटो नभएकाे", "पक्की बाटो"]),
+    houseGeoCode: z.object({
+      latitude: z.string(),
+      longitude: z.string(),
+      altitude: z.string(),
+      accuracy: z.string(),
+    }),
+    subjectName: z.string(),
+    houseOwnerName: z.string(),
+    sex: z.enum(["Male", "Female", "Others"]),
+    houseOwnerRelation: z.enum(["घरमुली आफै", "श्रीमान/श्रीमती", "अामा/ बुवा", "छोरा वा बुहारी", "छोरी वा ज्वार्इ", "ससुरा वा सासु", "काका वा काकी", "फुफु, फुफाजु", "मामा, माइजु", "नाति, नातिनी", "दाजु, भाइ", "भाउजू वा भाइबुहारी", "दीदि, बिहनी", "ज्वार्इ, जेठान", "ठूलाे बुवा, ठूलाे अामा"], {
+      required_error: "You need to select a notification type.",
+    }),
+    contactNumber: z.number().min(10, {
+      message: "Phone number must be at least 10 characters.",
+    }),
   }),
   familyDetails: z.object({
     firstName: z.string(),
@@ -205,6 +209,28 @@ const formSchema = z.object({
       "भत्ता नलिएका",
     ])
   }),
+  name: z.string().min(2, {
+    message: "Full Name must be at least 2 characters.",
+  }),
+  date: z.date({
+    required_error: "Please select a date.",
+  }),
+  email: z.string().email({
+    message: "Must be a vaild email",
+  }),
+  phone: z.string().min(10, {
+    message: "Phone number must be at least 10 characters.",
+  }),
+  notify: z.enum(["all", "mentions", "none"], {
+    required_error: "You need to select a notification type.",
+  }),
+  message: z.string().min(3, {
+    message: "Description must be at least 10 characters.",
+  }),
+  type: z.enum(["male", "female", "others"], {
+    required_error: "You need to select a notification type.",
+  }),
+
   familyBankStatus: z.enum(["छ", "छैन",]),
   familyBankDetail: z.enum(["बैंक", "लगुवित्तीय", "सहकारी",]),
 });
@@ -222,7 +248,8 @@ export function SurveyForm() {
       phone: "",
       notify: "all",
       message: "",
-      province: {
+      identity: {
+        province: {},
       },
     },
   });
@@ -232,15 +259,15 @@ export function SurveyForm() {
     name: "familyDetails" as never,
   });
 
-  const addressWatcher = form.watch("province");
+  const addressWatcher = form.watch("identity.province");
 
   useEffect(() => {
-    form.setValue("province.district", "");
+    form.setValue("identity.province.district", "");
 
   }, [addressWatcher.name, form]);
 
   useEffect(() => {
-    form.setValue("province.localAdministation", "");
+    form.setValue("identity.province.localAdministation", "");
   }, [addressWatcher.district, form]);
 
 
@@ -265,12 +292,12 @@ export function SurveyForm() {
               <AccordionContent>
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="surveyManagement.surveyCode"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>१.१. सर्वेक्षण काेडः</FormLabel>
                       <FormControl>
-                        <Input placeholder="Jhon Doe" {...field} />
+                        <Input placeholder="1" {...field} />
                       </FormControl>
 
                       <FormDescription>Please enter your full name.</FormDescription>
@@ -280,27 +307,52 @@ export function SurveyForm() {
                 />
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="surveyManagement.surveryDate"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex flex-col">
                       <FormLabel>१.२. सर्वेक्षण गरिएकाे मितिः</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Jhon Doe" {...field} />
-                      </FormControl>
-
-                      <FormDescription>Please enter your full name.</FormDescription>
+                      <Popover open={open} onOpenChange={setOpen}>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "PPP")
+                              ) : (
+                                <span>मिति छान्नुहोस</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={() => setOpen(false)}
+                            onDayClick={field.onChange}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormDescription>Choose a date</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="surveyManagement.surveyorName"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>१.३. सर्वेक्षण गर्नेकाे नाम</FormLabel>
                       <FormControl>
-                        <Input placeholder="Jhon Doe" {...field} />
+                        <Input placeholder="Ashis Poudel" {...field} />
                       </FormControl>
 
                       <FormDescription>Please enter your full name.</FormDescription>
@@ -315,7 +367,7 @@ export function SurveyForm() {
               <AccordionContent>
                 <FormField
                   control={form.control}
-                  name="province.name"
+                  name="identity.province.name"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>२.१. प्रदेश नं.</FormLabel>
@@ -344,7 +396,7 @@ export function SurveyForm() {
                 />
                 {addressWatcher.name && <FormField
                   control={form.control}
-                  name="province.district"
+                  name="identity.province.district"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>२.२ जिल्लाहरू</FormLabel>
@@ -370,7 +422,7 @@ export function SurveyForm() {
                 />}
                 {addressWatcher.district && NepalProvinceAndDistrict[addressWatcher.name][addressWatcher.district as NepalDistrict] && <FormField
                   control={form.control}
-                  name="province.localAdministation"
+                  name="identity.province.localAdministation"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>२.३. गाउँपालिका/नगरपालिका</FormLabel>
@@ -400,7 +452,7 @@ export function SurveyForm() {
                 />}
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="identity.ward"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>२.४. वडा नं.</FormLabel>
@@ -415,7 +467,7 @@ export function SurveyForm() {
                 />
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="identity.localityName"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>२.५. वस्तीकाे नाम</FormLabel>
@@ -430,7 +482,7 @@ export function SurveyForm() {
                 />
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="identity.houseNumber"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>२.५.१ घरको क्रम सख्या</FormLabel>
@@ -445,7 +497,7 @@ export function SurveyForm() {
                 />
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="identity.streetName"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>२.७. मार्गकाे नाम (घर छेउकाे बाटाेकाे नाम)</FormLabel>
@@ -460,7 +512,7 @@ export function SurveyForm() {
                 />
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="identity.familyMembers"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>२.८. जम्मा परिवार संख्या (परिवार संख्या)</FormLabel>
@@ -475,7 +527,7 @@ export function SurveyForm() {
                 />
                 <FormField
                   control={form.control}
-                  name="notify"
+                  name="identity.streetType"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>२.८.१. घर पुग्ने बाटो/ सडकको प्रकार</FormLabel>
@@ -504,7 +556,7 @@ export function SurveyForm() {
                   <Button>Get Current Location</Button>
                   <FormField
                     control={form.control}
-                    name="name"
+                    name="identity.houseGeoCode.latitude"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Latitude (x.y°)</FormLabel>
@@ -519,7 +571,7 @@ export function SurveyForm() {
                   />
                   <FormField
                     control={form.control}
-                    name="name"
+                    name="identity.houseGeoCode.longitude"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Longitude (x.y°)</FormLabel>
@@ -534,7 +586,7 @@ export function SurveyForm() {
                   />
                   <FormField
                     control={form.control}
-                    name="name"
+                    name="identity.houseGeoCode.altitude"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Altitude</FormLabel>
@@ -549,7 +601,7 @@ export function SurveyForm() {
                   />
                   <FormField
                     control={form.control}
-                    name="name"
+                    name="identity.houseGeoCode.accuracy"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
@@ -636,7 +688,7 @@ export function SurveyForm() {
                 />
                 <FormField
                   control={form.control}
-                  name="houseOwnerRelation"
+                  name="identity.houseOwnerRelation"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>२.१२  घरमुलीकाे के नाता पर्ने हाे ?</FormLabel>
