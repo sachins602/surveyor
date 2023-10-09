@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SurveyForm } from "@/components/SurveryForm";
 import { ThemeProvider } from "@/components/ThemeProvider/theme-provider";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useRouter } from "next/router";
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
 
 function AuthShowcase() {
   const { data: sessionData } = useSession();
+  const router = useRouter();
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
@@ -50,7 +52,10 @@ function AuthShowcase() {
           </Tabs>
         </div>
       ) : (
-        <Button onClick={() => void signIn()}>Sign in</Button>
+        <>
+          <Button onClick={() => void signIn()}>Sign in</Button>
+          <Button onClick={() => void router.push("/sign-up")}>Sign up</Button>
+        </>
       )}
     </div>
   );
